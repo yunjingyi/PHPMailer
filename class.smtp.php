@@ -348,6 +348,7 @@ class SMTP
     }
 
     /**
+     * 登陆认证
      * Perform SMTP authentication.
      * Must be run after hello().
      * @see hello()
@@ -843,6 +844,7 @@ class SMTP
                 $this->last_reply
             );
         } else {
+            //解析响应
             // Fall back to simple parsing if regex fails
             $code = substr($this->last_reply, 0, 3);
             $code_ex = null;
@@ -1009,6 +1011,7 @@ class SMTP
     }
 
     /**
+     * @fgets($this->smtp_conn, 515); 循环拿
      * Read the SMTP server's response.
      * Either before eof or socket timeout occurs on the operation.
      * With SMTP we can tell if we have more lines to read if the

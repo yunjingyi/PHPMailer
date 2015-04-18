@@ -1,5 +1,6 @@
 <?php
 /**
+ * 2015-04-18  阅读第1次
  * PHPMailer - PHP email creation and transport class.
  * PHP Version 5
  * @package PHPMailer
@@ -275,7 +276,7 @@ class PHPMailer
     public $AuthType = '';
 
     /**
-     * SMTP realm.
+     * SMTP realm.  领域
      * Used for NTLM auth
      * @type string
      */
@@ -296,7 +297,7 @@ class PHPMailer
     public $Timeout = 300;
 
     /**
-     * SMTP class debug output mode.
+     * SMTP class debug output mode.  dubug模式**
      * Debug output level.
      * Options:
      * * `0` No output
@@ -310,7 +311,7 @@ class PHPMailer
     public $SMTPDebug = 0;
 
     /**
-     * How to handle debug output.
+     * How to handle debug output.  debug输出方式
      * Options:
      * * `echo` Output plain-text as-is, appropriate for CLI
      * * `html` Output escaped, line breaks converted to `<br>`, appropriate for browser output
@@ -326,6 +327,7 @@ class PHPMailer
     public $Debugoutput = 'echo';
 
     /**
+     * 保持一个 SMTP connection ，需要手动smtpClose()。
      * Whether to keep SMTP connection open after each message.
      * If this is set to true then to close the connection
      * requires an explicit call to smtpClose().
@@ -357,6 +359,7 @@ class PHPMailer
     public $do_verp = false;
 
     /**
+     * body 为空标识
      * Whether to allow sending messages with an empty body.
      * @type boolean
      */
@@ -371,6 +374,7 @@ class PHPMailer
     public $LE = "\n";
 
     /**
+     * 电子邮件验证标准
      * DKIM selector.
      * @type string
      */
@@ -404,6 +408,7 @@ class PHPMailer
     public $DKIM_private = '';
 
     /**
+     * send之后的回调函数
      * Callback Action function name.
      *
      * The function that handles the result of the send email action.
@@ -588,7 +593,7 @@ class PHPMailer
     }
 
     /**
-     * Destructor.
+     * Destructor.  stmp方式关闭 smtpClose
      */
     public function __destruct()
     {
@@ -599,7 +604,7 @@ class PHPMailer
     }
 
     /**
-     * Call mail() in a safe_mode-aware fashion.
+     * Call mail() in a safe_mode-aware意识到 fashion.
      * Also, unless sendmail_path points to sendmail (or something that
      * claims to be sendmail), don't pass params (not a perfect fix,
      * but it will do)
@@ -628,6 +633,7 @@ class PHPMailer
     }
 
     /**
+     * 输出debug信息
      * Output debugging info via user-defined method.
      * Only generates output if SMTP debug output is enabled (@see SMTP::$do_debug).
      * @see PHPMailer::$Debugoutput
@@ -795,7 +801,7 @@ class PHPMailer
         if (!preg_match('/^(to|cc|bcc|Reply-To)$/', $kind)) {
             $this->setError($this->lang('Invalid recipient array') . ': ' . $kind);
             $this->edebug($this->lang('Invalid recipient array') . ': ' . $kind);
-            if ($this->exceptions) {
+            if ($this->exceptions) {//允许异常的口子
                 throw new phpmailerException('Invalid recipient array: ' . $kind);
             }
             return false;
@@ -868,6 +874,7 @@ class PHPMailer
     }
 
     /**
+     * 邮件地址校验
      * Check that a string looks like an email address.
      * @param string $address The email address to check
      * @param string $patternselect A selector for the validation pattern to use :
@@ -986,6 +993,7 @@ class PHPMailer
     }
 
     /**
+     * 拼接邮件协议
      * Prepare a message for sending.
      * @throws phpmailerException
      * @return boolean
@@ -1051,6 +1059,7 @@ class PHPMailer
     }
 
     /**
+     * 发送拼接邮件
      * Actually send a message.
      * Send the email via the selected mechanism
      * @throws phpmailerException
@@ -1148,6 +1157,7 @@ class PHPMailer
     }
 
     /**
+     * 真发邮件
      * Send mail using the PHP mail() function.
      * @param string $header The message headers
      * @param string $body The message body
@@ -1193,6 +1203,7 @@ class PHPMailer
     }
 
     /**
+     * stmp操作实例化
      * Get an instance to use for SMTP operations.
      * Override this function to load your own SMTP implementation
      * @return SMTP
@@ -1295,6 +1306,7 @@ class PHPMailer
         $this->smtp->setDebugLevel($this->SMTPDebug);
         $this->smtp->setDebugOutput($this->Debugoutput);
         $this->smtp->setVerp($this->do_verp);
+        //地址;分隔
         $hosts = explode(';', $this->Host);
         $lastexception = null;
 
@@ -1395,6 +1407,7 @@ class PHPMailer
     }
 
     /**
+     * 不过是msg而已，不需要看cn的，留个口子的意思
      * Set the language for error messages.
      * Returns false if it cannot load the language file.
      * The default language is English.
@@ -1477,6 +1490,7 @@ class PHPMailer
     }
 
     /**
+     * 格式化地址
      * Format an address for use in a message header.
      * @access public
      * @param array $addr A 2-element indexed array, element 0 containing an address, element 1 containing a name
@@ -1669,7 +1683,8 @@ class PHPMailer
     }
 
     /**
-     * Assemble message headers.
+     * 设置boundaries
+     * Assemble组装 message headers.
      * @access public
      * @return string The assembled headers
      */
@@ -2069,6 +2084,7 @@ class PHPMailer
     }
 
     /**
+     * 判断邮件类型
      * Set the message type.
      * PHPMailer only supports some preset message types,
      * not arbitrary MIME structures.
@@ -2094,6 +2110,7 @@ class PHPMailer
     }
 
     /**
+     * 格式化单个头
      * Format a header line.
      * @access public
      * @param string $name
@@ -2176,6 +2193,7 @@ class PHPMailer
     }
 
     /**
+     * 附件
      * Attach all file, string, and binary attachments to the message.
      * Returns an empty string on failure.
      * @access protected
@@ -2283,6 +2301,7 @@ class PHPMailer
     }
 
     /**
+     * 将attachment 的 file用base64编码
      * Encode a file attachment in requested format.
      * Returns an empty string on failure.
      * @param string $path The full path to the file
@@ -2824,6 +2843,7 @@ class PHPMailer
     }
 
     /**
+     * 错误记录 error_count和ErrorInfo。
      * Add an error message to the error container.
      * @access protected
      * @param string $msg
@@ -3183,6 +3203,7 @@ class PHPMailer
     }
 
     /**
+     * mb_pathinfo  获取文件信息
      * Multi-byte-safe pathinfo replacement.
      * Drop-in replacement for pathinfo(), but multibyte-safe, cross-platform-safe, old-version-safe.
      * Works similarly to the one in PHP >= 5.2.0

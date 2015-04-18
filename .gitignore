@@ -4,3 +4,5 @@ test/testbootstrap.php
 test/*.pem
 .idea
 build/
+composer.lock
+vendor/
